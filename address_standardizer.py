@@ -3,8 +3,8 @@
 #in the column name.
 #It then applies standards retrieved from the USPS website to convert the addresses to a standardized format,
 #useful for comparison against standardized databases. It uses the 'usaddress' module to parse the original addresses
-#in order to extract subcomponents of the address for standardization. 
-
+#in order to extract subcomponents of the address for standardization.
+#It provides an option to keep or remove apartment numbers.
 
 import csv
 import os
