@@ -1,7 +1,12 @@
+#the following script is iterates through various csv files in a directory, using a shared ID column in order to extract
+#and compile specific information about unique customers. It keeps track of the source document of the information and
+#applies a customizable hierarchy in order to output the most reliable information. It keeps track of the source document for
+#each data point and writes the source to an output csv file for reference. It also applies some simple principles
+#and text detection to determine whether an email is valid or useful.
+
 import csv
 import os
 
-# go through each file, use global customer ID. This becomes the key in the master dictionary.
 def main():
 
 	master_dict=dict()
@@ -45,7 +50,6 @@ def main():
 				for header in headers:
 					if header not in all_headers:
 						headers_to_add.append(header)
-				#print(headers_to_add, len(headers_to_add), len(set(headers_to_add)))
 				all_headers.extend(headers_to_add)
 				break
 			for line in reader:
@@ -87,18 +91,12 @@ def main():
 			entry = master_dict[global_id] #entry is a dictionary consisting of the header name and a list of tuples - source rank, value
 			writedict=dict()
 			for header in entry:
-				#print(entry[header])
 				both = sorted(entry[header])[0]
-				#print(both)
 				if not address_found:
 					if header == 'Address':
 						retrieved_source = both[0]
 						address_found=True
-				#print(retrieved_source)
-				writedict[header] = both[1] #REMOVE COMMENT
-				#writedict[header] = ";".join([str(both[0]), both[1]]) #THIS IS FOR TESTING, COMMENT OUT!!!!!!!
-				#print(both[1])
-				#print("\n")
+				writedict[header] = both[1]
 			towrite = ['' for _ in range(len(write_headers))]
 			for header in write_headers:
 				try:
