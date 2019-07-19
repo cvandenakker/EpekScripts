@@ -31,7 +31,7 @@ def minimumBribes(q):
         ind_lst.append(ind_dif)
 
     ret_val = int(final_count)
-    print(ret_val)
+    return ret_val
 
 
 def climbingLeaderboard2(scores, alice):
@@ -78,10 +78,8 @@ def extra_long_factorials(n):
     result=1
     for number in to_multiply:
         result = result*number
-    print(result)
-    
+    return result
 
-three_lists = [[4,9,2],[3,5,7],[6,4,2]]
 
 def magic_square(three_lists):
     
@@ -138,7 +136,7 @@ def magic_square(three_lists):
             local_cost = abs(magic_array[ind] - input_array[ind])
             local_total+=local_cost
         costs.append(local_total)
-    print(min(costs))
+    return min(costs)
             
 
 def make_substrings(input_word, second=False):
@@ -188,7 +186,6 @@ def find_substrings(substrings_lst):
         
     return set(ret_lst)
 
-substrings = find_substrings(make_substrings('abracadabra'))
 
 def get_all(substrings, word):
     
@@ -205,7 +202,6 @@ def get_all(substrings, word):
                     all_lst.append(item)
     return sorted(all_lst, key = lambda x: len(x))
                 
-all_substrings = get_all(substrings, 'abracadabra')
 
 def get_palindromes(all_substrings):
     
@@ -233,6 +229,30 @@ def get_palindromes(all_substrings):
 
     return count
 
-to_ret=get_palindromes(all_substrings)
-print(to_ret)
+def nonDivisibleSubset(k, main_lst):
+    #the following algorithm determines the maximum length subset of the input array none
+    #of whose paired entries are evenly divisible by k
+    sample=set()
+    for i in range(1, len(main_lst)+1):
+        combs=itertools.combinations(main_lst, i)
+        for item in combs:
+            sample.add(item)
+
+    good_lsts=list()
+    master_lst=sample
+    for lst in master_lst:
+        good=True
+        for i, val in enumerate(lst):
+            primary=val
+            skip_ind=i
+            for i2, val2 in enumerate(lst):
+                if i2 == skip_ind:
+                    continue
+                loctup = (primary, val2)
+                if sum(loctup)%k == 0:
+                    good=False
+        if good:
+            good_lsts.append(lst)
+
+    return len((sorted(good_lsts, key=len)[-1]))
             
